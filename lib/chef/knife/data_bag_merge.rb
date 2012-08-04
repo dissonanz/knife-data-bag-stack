@@ -5,14 +5,14 @@ require 'chef/mixin/release'
 
 class Chef
   class Knife
-    class DataBagMerge < Knife
+    class DataBagStack < Knife
 
       deps do
         require 'chef/data_bag'
         require 'chef/data_bag_item'
       end
 
-      banner "knife data bag merge BAG FILE (options)"
+      banner "knife data bag stack BAG FILE (options)"
       category "data bag"
 
       def run
@@ -22,7 +22,7 @@ class Chef
           ui.fatal("You must specify a data bag name.")
         end
 
-        set_release({"smegheads" => "Lister"})
+        data_bag_stack({"smegheads" => "Lister"})
         
       end
       

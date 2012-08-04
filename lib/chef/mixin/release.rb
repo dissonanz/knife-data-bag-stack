@@ -13,7 +13,7 @@ require 'chef'
 class Chef
   module Mixin
     module Release
-      def set_release(releases)
+      def data_bag_stack(releases)
         raise ArgumentError, "Options must be a Hash." unless releases.kind_of?(Hash)
         raise ArgumentError, "Please give me something to work with." unless releases.keys.count > 0
         

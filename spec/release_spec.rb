@@ -23,16 +23,16 @@ describe Chef::Mixin::Release do
     
     it "tries to load specified data bags" do
       @rest.should_receive(:get_rest).with("data/smegheads/Lister").and_return(@data_bag_item.to_hash)
-      set_release({"smegheads" => ["Lister"]})
+      data_bag_stack({"smegheads" => ["Lister"]})
     end
     
     it "returns error when no input is given" do
-      lambda { set_release(Hash.new) }.should raise_error ArgumentError
+      lambda { data_bag_stack(Hash.new) }.should raise_error ArgumentError
     end
     
     it "returns error when input is not a hash" do
       [String, Array, Mash].each do |input|
-        lambda { set_release(input.new) }.should raise_error ArgumentError
+        lambda { data_bag_stack(input.new) }.should raise_error ArgumentError
       end
     end
 
@@ -44,11 +44,11 @@ describe Chef::Mixin::Release do
 
       it "returns the same data bag item when only one is given as string" do
         @rest.should_receive(:get_rest).with("data/smegheads/Lister").and_return(@data_bag_item.to_hash)
-        set_release({"smegheads" => "Lister"})["name"].should == "Lister"
+        data_bag_stack({"smegheads" => "Lister"})["name"].should == "Lister"
       end
       it "returns the same data bag item when only one is given as array" do
         @rest.should_receive(:get_rest).with("data/smegheads/Lister").and_return(@data_bag_item.to_hash)
-        set_release({"smegheads" => ["Lister"]})["name"].should == "Lister"
+        data_bag_stack({"smegheads" => ["Lister"]})["name"].should == "Lister"
       end
 
     end #one-item
@@ -64,7 +64,7 @@ describe Chef::Mixin::Release do
       it "returns the merged data bag item when two are given" do
         @rest.should_receive(:get_rest).with("data/smegheads/Lister").and_return(@data_bag_item.to_hash)
         @rest.should_receive(:get_rest).with("data/smegheads/Rimmer").and_return(@data_bag_item2.to_hash)
-        set_release({"smegheads" => ["Lister","Rimmer"]})["name"].should == "Rimmer"
+        data_bag_stack({"smegheads" => ["Lister","Rimmer"]})["name"].should == "Rimmer"
       end
     end #two-or-more-items
   end #one-bag
@@ -79,12 +79,12 @@ describe Chef::Mixin::Release do
     it "returns the merged data bag item when two are given and second is string" do
       @rest.should_receive(:get_rest).with("data/smegheads/Lister").and_return(@data_bag_item.to_hash)
       @rest.should_receive(:get_rest).with("data/computers/Holly").and_return(@data_bag_item3.to_hash)
-      set_release({"smegheads" => ["Lister"], "computers" => "Holly"})["name"].should == "Holly"
+      data_bag_stack({"smegheads" => ["Lister"], "computers" => "Holly"})["name"].should == "Holly"
     end
     it "returns the merged data bag item when two are given and second is array" do
       @rest.should_receive(:get_rest).with("data/smegheads/Lister").and_return(@data_bag_item.to_hash)
       @rest.should_receive(:get_rest).with("data/computers/Holly").and_return(@data_bag_item3.to_hash)
-      out = set_release({"smegheads" => ["Lister"], "computers" => ["Holly"] })
+      out = data_bag_stack({"smegheads" => ["Lister"], "computers" => ["Holly"] })
       out["name"].should == "Holly"
       out["IQ"].should == 6000
     end
