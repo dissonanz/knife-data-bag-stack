@@ -32,5 +32,6 @@ describe Chef::Knife::DataBagMerge do
   it "returns the same data bag if only one is given" do
     @knife.name_args = ["smegheads","Lister"]
     @knife.run
+  end
 
 end
