@@ -5,7 +5,7 @@ require 'chef/mixin/release'
 
 class Chef
   class Knife
-    class DataBagStack < Knife
+    class DataBagStack < Chef::Knife
 
       deps do
         require 'chef/data_bag'
@@ -23,9 +23,8 @@ class Chef
         end
 
         data_bag_stack({"smegheads" => "Lister"})
-        
       end
-      
+
     end
   end
 end

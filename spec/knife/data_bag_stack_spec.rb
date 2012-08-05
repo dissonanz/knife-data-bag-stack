@@ -1,4 +1,4 @@
-require 'chef/knife/data_bag_merge'
+require 'chef/knife/data_bag_stack'
 
 module ChefSpecs
   class ChefRest
@@ -15,11 +15,13 @@ end
 
 
 
-describe Chef::Knife::DataBagMerge do
+describe Chef::Knife::DataBagStack do
 
   before do
-    @knife = Chef::Knife::DataBagMerge.new
-    @rest = ChefSpecs::ChefRest.new
+
+    @knife = Chef::Knife::DataBagStack.new
+    @base_url   = "http://chef.example.com:4000"
+    @rest = Chef::REST.new(@base_url, nil, nil)
     @knife.stub!(:rest).and_return(@rest)
     @stdout = StringIO.new
     @knife.ui.stub!(:stdout).and_return(@stdout)
@@ -30,6 +32,8 @@ describe Chef::Knife::DataBagMerge do
   end
 
   it "returns the same data bag if only one is given" do
+#    File.stub(:read).with("/etc/chef/client.pem").returns("mykey")
+    @rest.should_receive(:something)
     @knife.name_args = ["smegheads","Lister"]
     @knife.run
   end
