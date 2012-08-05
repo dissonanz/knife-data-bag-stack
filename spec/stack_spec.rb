@@ -5,11 +5,11 @@
 #
 
 require 'chef'
-require 'chef/mixin/release'
-include Chef::Mixin::Release
+require 'chef/mixin/stack'
+include Chef::Mixin::Stack
 
 
-describe Chef::Mixin::Release do
+describe Chef::Mixin::Stack do
 
   before(:each) do
     @data_bag_item = Chef::DataBagItem.new
@@ -20,16 +20,16 @@ describe Chef::Mixin::Release do
   end
 
   describe "when there is an error" do
-    
+
     it "tries to load specified data bags" do
       @rest.should_receive(:get_rest).with("data/smegheads/Lister").and_return(@data_bag_item.to_hash)
       data_bag_stack({"smegheads" => ["Lister"]})
     end
-    
+
     it "returns error when no input is given" do
       lambda { data_bag_stack(Hash.new) }.should raise_error ArgumentError
     end
-    
+
     it "returns error when input is not a hash" do
       [String, Array, Mash].each do |input|
         lambda { data_bag_stack(input.new) }.should raise_error ArgumentError

@@ -1,5 +1,5 @@
 require 'chef/knife'
-require 'chef/mixin/release'
+require 'chef/mixin/stack'
 
 
 
